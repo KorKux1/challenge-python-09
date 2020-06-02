@@ -15,20 +15,32 @@ class Solution:
         Arguments:
             arr {List[int]} -- [Array of numbers that will duplicate the zeros it contains]
         """
-        stack_array_invert = arr[::-1]  # O(n)
-        arr_index = 0
+        i, j = 0, 0
         length = len(arr)
-        while arr_index < length: # O(n)
-            value = stack_array_invert.pop()
+        while j < length:  # O(n)
+            if arr[i] == 0:
+                j += 1
+            i += 1
+            j += 1
+        i -= 1
 
-            if value == 0:
-                arr[arr_index] = value
+        if arr[i] != 0:
+            j -= 1
+        else:
+            if j - 1 < length:
+                arr[j-1] = 0
+            arr[j-2] = 0
+            i -= 1
+            j -= 3
 
-                if arr_index + 1 < length:
-                    arr[arr_index + 1] = value
-                arr_index += 1
-
+        while i >= 0: # O(n)
+            if arr[i] == 0:
+                arr[j] = 0
+                arr[j-1] = 0
+                j -= 2
+                i -= 1
             else:
-                arr[arr_index] = value
-            arr_index += 1
+                arr[j] = arr[i]
+                j -= 1
+                i -= 1
         # Complex = O(n) + O(n) = O(2n) = O(n)
